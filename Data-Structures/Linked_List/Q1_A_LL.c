@@ -46,30 +46,30 @@ int main()
 	ll.head = NULL;
 	ll.size = 0;
 
-	printf("1: Insert an integer to the sorted linked list:\n");
-	printf("2: Print the index of the most recent input value:\n");
-	printf("3: Print sorted linked list:\n");
-	printf("0: Quit:");
+	printf("1: 정렬된 연결 리스트에 정수를 삽입하기:\n");
+	printf("2: 가장 최근에 입력한 값의 인덱스 출력하기:\n");
+	printf("3: 정렬된 연결 리스트 출력하기:\n");
+	printf("0: 종료하기:");
 
 	while (c != 0)
 	{
-		printf("\nPlease input your choice(1/2/3/0): ");
+		printf("\n원하는 작업을 선택하세요 (1/2/3/0): ");
 		scanf("%d", &c);
 
 		switch (c)
 		{
 		case 1:
-			printf("Input an integer that you want to add to the linked list: ");
+			printf("연결 리스트에 추가할 정수를 입력하세요: ");
 			scanf("%d", &i);
 			j = insertSortedLL(&ll, i);
-			printf("The resulting linked list is: ");
+			printf("현재 연결 리스트: ");
 			printList(&ll);
 			break;
 		case 2:
-			printf("The value %d was added at index %d\n", i, j);
+			printf("값 %d(은)는 인덱스 %d 위치에 추가되었습니다.\n", i, j);
 			break;
 		case 3:
-			printf("The resulting sorted linked list is: ");
+			printf("현재 정렬된 연결 리스트: ");
 			printList(&ll);
 			removeAllItems(&ll);
 			break;
@@ -77,11 +77,9 @@ int main()
 			removeAllItems(&ll);
 			break;
 		default:
-			printf("Choice unknown;\n");
+			printf("잘못된 선택입니다.\n");
 			break;
 		}
-
-
 	}
 	return 0;
 }
@@ -90,7 +88,41 @@ int main()
 
 int insertSortedLL(LinkedList *ll, int item)
 {
-	/* add your code here */
+	ListNode *newNode;
+	newNode = malloc(sizeof(ListNode));
+	newNode->item = item;
+	newNode->next = NULL;
+
+	if (ll->head == NULL) {
+		ll->head = newNode;
+	} else {
+		// while (cur->next != NULL) {
+		// 	cur = cur->next; // cur 
+		// 	printf("[!] 값 추가됨 : %d\n", item);
+		// }
+
+		if (ll->head == NULL || item <= ll->head->item) {
+			newNode->next = ll->head;
+			ll->head = newNode;
+			ll->size++;
+			return 0;
+    	}
+
+		ListNode *prev = ll->head;
+    	ListNode *cur  = ll->head->next;
+
+		while (cur != NULL && cur->item < item) {
+			prev = cur;
+			cur  = cur->next;
+		}
+
+		newNode->next = cur;
+		prev->next = newNode;
+		ll->size++;
+		return 0;
+		
+		cur->next = newNode;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
