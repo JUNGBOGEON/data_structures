@@ -103,7 +103,40 @@ int main()
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-    /* add your code here */
+	int mergeList[50];
+	int size = 0;
+
+	ListNode *cur1;
+	ListNode *cur2;
+	cur1 = ll1->head;
+	cur2 = ll2->head;
+
+	while (cur1 != NULL) {
+		size++;
+		mergeList[size - 1] = cur1->item;
+		cur1 = cur1->next;
+	}
+
+	while (cur2 != NULL) {
+		size++;
+		mergeList[size - 1] = cur2->item;
+		cur2 = cur2->next;
+	}
+
+	for (int i = 0; i < size - 1; i++) {
+		for (int j = 0; j < size - i - 1; j++) {
+			if (mergeList[j] > mergeList[j + 1]) {
+				int temp = mergeList[j];
+				mergeList[j] = mergeList[j + 1];
+				mergeList[j + 1] = temp;
+			}
+		}
+	}
+
+	for (int i = 0; i < size; i++) {
+    	printf("%d ", mergeList[i]);
+	}
+	printf("\n");
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
