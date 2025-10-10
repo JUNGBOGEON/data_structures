@@ -93,36 +93,27 @@ int insertSortedLL(LinkedList *ll, int item)
 	newNode->item = item;
 	newNode->next = NULL;
 
-	if (ll->head == NULL) {
+	if (ll->head == NULL || item <= ll->head->item) {
+		newNode->next = ll->head;
 		ll->head = newNode;
-	} else {
-		// while (cur->next != NULL) {
-		// 	cur = cur->next; // cur 
-		// 	printf("[!] 값 추가됨 : %d\n", item);
-		// }
-
-		if (ll->head == NULL || item <= ll->head->item) {
-			newNode->next = ll->head;
-			ll->head = newNode;
-			ll->size++;
-			return 0;
-    	}
-
-		ListNode *prev = ll->head;
-    	ListNode *cur  = ll->head->next;
-
-		while (cur != NULL && cur->item < item) {
-			prev = cur;
-			cur  = cur->next;
-		}
-
-		newNode->next = cur;
-		prev->next = newNode;
 		ll->size++;
 		return 0;
-		
-		cur->next = newNode;
 	}
+
+	ListNode *prev = ll->head;
+	ListNode *cur  = ll->head->next;
+
+	while (cur != NULL && cur->item < item) {
+		prev = cur;
+		cur  = cur->next;
+	}
+
+	newNode->next = cur;
+	prev->next = newNode;
+	ll->size++;
+	return 0;
+	
+	cur->next = newNode;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
