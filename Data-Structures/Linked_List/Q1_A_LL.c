@@ -88,32 +88,25 @@ int main()
 
 int insertSortedLL(LinkedList *ll, int item)
 {
-	ListNode *newNode;
-	newNode = malloc(sizeof(ListNode));
-	newNode->item = item;
-	newNode->next = NULL;
+	int count = 0;
 
-	if (ll->head == NULL || item <= ll->head->item) {
-		newNode->next = ll->head;
-		ll->head = newNode;
-		ll->size++;
-		return 0;
+	if (findNode(ll, count) == NULL) {
+		insertNode(ll, count, item);
+	} else {
+		// fineNode 를 사용하여, 인덱스 를 확인하고, 
+		// 작다면 다음 인덱스로 넘어가고, 크다면 이전 인덱스에다가 추가하도록
+
+		while (findNode(ll, count) != NULL) {
+			if (findNode(ll, count)->item < item) {
+				count++;
+			} else {
+				break;
+			}
+			// printf("%d 인덱스의 이미 %d 값이 존재합니다.\n", count, findNode(ll, count)->item);
+		}
+
+		insertNode(ll, count, item);
 	}
-
-	ListNode *prev = ll->head;
-	ListNode *cur  = ll->head->next;
-
-	while (cur != NULL && cur->item < item) {
-		prev = cur;
-		cur  = cur->next;
-	}
-
-	newNode->next = cur;
-	prev->next = newNode;
-	ll->size++;
-	return 0;
-	
-	cur->next = newNode;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -173,7 +166,7 @@ ListNode *findNode(LinkedList *ll, int index){
 	return temp;
 }
 
-int insertNode(LinkedList *ll, int index, int value){
+int insertNode(LinkedList *ll, int index, int value) {
 
 	ListNode *pre, *cur;
 
