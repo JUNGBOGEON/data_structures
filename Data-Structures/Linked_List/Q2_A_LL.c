@@ -80,7 +80,7 @@ int main()
 		case 3:
 		    printf("The resulting linked lists after merging the given linked list are:\n");
 			alternateMergeLinkedList(&ll1, &ll2); // You need to code this function
-			printf("The resulting linked list 1: ");
+			printf("The resulting linked list 1: "); 
 			printList(&ll1);
 			printf("The resulting linked list 2: ");
 			printList(&ll2);
@@ -103,41 +103,50 @@ int main()
 
 void alternateMergeLinkedList(LinkedList *ll1, LinkedList *ll2)
 {
-	int mergeList[50];
-	int size = 0;
-
 	ListNode *cur1;
 	ListNode *cur2;
+	int count = 1;
+	int index = 0;
+
 	cur1 = ll1->head;
 	cur2 = ll2->head;
 
-	while (cur1 != NULL) {
-		size++;
-		mergeList[size - 1] = cur1->item;
-		cur1 = cur1->next;
-	}
-
-	while (cur2 != NULL) {
-		size++;
-		mergeList[size - 1] = cur2->item;
-		cur2 = cur2->next;
-	}
-
-	for (int i = 0; i < size - 1; i++) {
-		for (int j = 0; j < size - i - 1; j++) {
-			if (mergeList[j] > mergeList[j + 1]) {
-				int temp = mergeList[j];
-				mergeList[j] = mergeList[j + 1];
-				mergeList[j + 1] = temp;
-			}
+	while (cur1->next != NULL) {
+		if (cur2 == NULL) {
+			break;
 		}
-	}
 
-	for (int i = 0; i < size; i++) {
-    	printf("%d ", mergeList[i]);
+		insertNode(ll1, count, cur2->item);
+		removeNode(ll2, index);
+		
+		cur1 = cur1->next;
+		cur2 = cur2->next;
+		count++; count++;
+		index++;
 	}
-	printf("\n");
 }
+
+	// printf("[!] 0번 인덱스의 1번째 리스트 값: %d\n", findNode(ll1, 0)->item);
+	// printf("[!] 1번 인덱스의 2번째 리스트 값: %d\n", findNode(ll2, 0)->item);
+	// ll1 = [1, 2, 3]
+	// ll2 = [4, 5, 6]
+	// 이라면, ll1 을 [1, 4, 2, 5, 3, 6] 으로 수정
+
+	// -- 구현 --
+	// ll2 [0] 번째 인덱스를 가져와서, ll1 [1] 번째 인덱스의 추가하기
+	// (예외처리) ll2 의 인덱스 Next 값을 확인하며, 없다면 이번 인덱스 추가를 마지막으로 종료하기
+	// (예외처리) ll1 [1] 번째 [3], [5] 이렇게 추가할껀데, Next 값을 확인하며, 없다면 이번 인덱스 추가를 마지막으로 종료하기
+
+	// insertNode(ll1, count, cur2->item); // 초기값 ll1 1번 인덱스에다가 ll2 인덱스 추가하기
+	// removeNode(ll2, index);
+
+	// cur1 = cur1->next;
+	// cur2 = cur2->next;
+
+	// ll1 = [1, 2, 3]
+	// ll2 = [4, 5, 6, 7]
+	// 이라면, ll1 을 [1, 4, 2, 5, 3, 6]
+	// ll2 는 [7] 이렇게 (ll2 가 ll1 보다 클 경우, ll2 의 마지막 숫자는 남겨두기)
 
 ///////////////////////////////////////////////////////////////////////////////////
 
