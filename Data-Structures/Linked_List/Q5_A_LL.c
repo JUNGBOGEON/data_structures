@@ -41,6 +41,7 @@ int main()
 	int c, i;
 	LinkedList ll;
 	LinkedList resultFrontList, resultBackList;
+	c = 1;
 
 	//Initialize the linked list as an empty linked list
 	ll.head = NULL;
@@ -102,7 +103,26 @@ int main()
 
 void frontBackSplitLinkedList(LinkedList *ll, LinkedList *resultFrontList, LinkedList *resultBackList)
 {
-	/* add your code here */
+	ListNode *cur;
+	cur = ll->head;
+	int countIndex = 0;
+
+	while (cur != NULL) {
+		cur = cur->next;
+		countIndex++;
+	}
+
+	cur = ll->head;
+
+	for (int i = 0; i < ((countIndex+1) / 2); i++) {
+		insertNode(resultFrontList, i, cur->item);
+		cur = cur->next;
+	}
+
+	for (int i = 0; i < (countIndex - ((countIndex+1) / 2)); i++) {
+		insertNode(resultBackList, i, cur->item);
+		cur = cur->next;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
