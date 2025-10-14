@@ -86,7 +86,36 @@ int main()
 
 void moveEvenItemsToBack(LinkedList *ll)
 {
-	/* add your code here */
+	ListNode *cur;
+	cur = ll->head;
+	int evenNumberIndex[30];
+	int oddNumberIndex[30];
+	int evenIndex = 0;
+	int oddIndex = 0;
+	int result = 0;
+
+	while (cur != NULL) {
+		if (cur->item % 2 == 0) {
+			evenNumberIndex[evenIndex] = cur->item;
+			evenIndex++;
+		} else if (cur->item % 2 != 0) {
+			oddNumberIndex[oddIndex] = cur->item;
+			oddIndex++;
+		}
+		cur = cur->next;
+	}
+
+	removeAllItems(ll);
+
+	for (int i = 0; i < oddIndex; i++) {
+		insertNode(ll, result, oddNumberIndex[i]);
+		result++;
+	}
+
+	for (int i = 0; i < evenIndex; i++) {
+		insertNode(ll, result, evenNumberIndex[i]);
+		result++;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
